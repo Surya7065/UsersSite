@@ -1,0 +1,15 @@
+from django.shortcuts import render, get_object_or_404
+from django.http import request, HttpResponse
+from django.contrib.auth.models import User
+
+
+def index(request):
+    """
+    Helper method to render Index.html for the path /user/
+    :param request
+    :return: list of Users
+    """
+
+    user_list = User.objects.all()
+
+    return render(request, 'info/index.html', {'user_list': user_list})
