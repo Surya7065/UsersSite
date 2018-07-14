@@ -25,6 +25,13 @@
 
         <h1>Index</h1>
 
+        <div style="text-align:end; margin: 16px">
+            <a class="btn btn-primary" role="button" href="{% url 'info:add_user' %}">+ Create User</a>
+        </div>
+
+        <br/>
+        <br/>
+
 
         <!--check if users exits in the database-->
         {% if user_list %}

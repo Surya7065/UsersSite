@@ -17,6 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+app_name = 'info'
+
 urlpatterns = [
+    # /user/
     path('', views.index, name='index'),
+    # /user/add/
+    path('add/', views.add_user, name='add_user'),
 ]
