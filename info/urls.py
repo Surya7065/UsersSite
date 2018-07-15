@@ -22,6 +22,10 @@ app_name = 'info'
 urlpatterns = [
     # /user/
     path('', views.index, name='index'),
+
     # /user/add/
     path('add/', views.add_user, name='add_user'),
+
+    # /user/{{id}}/delete/
+    path('<int:user_id>/delete', views.delete_user, name='delete_user'),
 ]

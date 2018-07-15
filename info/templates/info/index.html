@@ -92,7 +92,7 @@
                     </div>
                     <div class="modal-footer">
                         <a class="btn btn-primary btn-sm" role="button" href="#" data-dismiss="modal">Cancel</a>&nbsp&nbsp&nbsp
-                        <a id="delete_user" class="btn btn-danger btn-sm" role="button" href="#">Delete</a>&nbsp&nbsp&nbsp
+                        <a id="delete_user" class="btn btn-danger btn-sm" role="button" href="#" onclick="handleDelete('a')">Delete</a>&nbsp&nbsp&nbsp
                         <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                     </div>
                 </div>
@@ -104,5 +104,25 @@
         {% endif %}
 
     </body>
+
+
+    <script>
+
+        $('#myModal').on('show.bs.modal', function(event) {
+              var button = $(event.relatedTarget) // Button that triggered the modal
+              var first_name = button.data('whatever') // Extract info from data-* attributes
+              var user_id = button.data('userid') // Extract info from data-* attributes
+              console.log(user_id + 'user id')
+              var modal = $(this)
+              modal.find('.modal-title').text('Do you want to delete')
+              modal.find('.user_name').text(user_id)
+        });
+
+        function handleDelete(arg){
+              console.log("Clicked");
+        }
+
+
+    </script>
 
 </html>
