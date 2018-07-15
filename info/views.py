@@ -44,4 +44,6 @@ def delete_user(request, user_id):
     :param request
     :return: Display status of the deleted user with message
     """
-    return HttpResponse("Delete user from database with user id %s" % user_id)
+    user = get_object_or_404(User, pk=user_id)
+    user.delete()
+    return HttpResponseRedirect(reverse('info:index'))
