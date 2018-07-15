@@ -28,4 +28,7 @@ urlpatterns = [
 
     # /user/{{id}}/delete/
     path('<int:user_id>/delete', views.delete_user, name='delete_user'),
+
+    # /user/{{id}}/edit/
+    path('<int:user_id>/edit', views.edit_user, name='edit_user'),
 ]

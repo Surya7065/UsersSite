@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <title>Index Page</title>
+        <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -18,19 +18,37 @@
     </head>
 
     <style>
-        <!--th{-->
-            <!--text-align: center-->
-        <!--}-->
-
+        .navbar-custom {
+            background-color: #3FC380;
+        }
+        /* change the brand and text color */
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-text {
+            color: rgba(255,255,255,.8);
+        }
+        /* change the link color */
+        .navbar-custom .navbar-nav .nav-link {
+            color: rgba(255,255,255,.5);
+        }
+        /* change the color of active or hovered links */
+        .navbar-custom .nav-item.active .nav-link,
+        .navbar-custom .nav-item:hover .nav-link {
+            color: #111111;
+        }
     </style>
 
     <body>
 
-        <h1>Index</h1>
-
-        <div style="text-align:end; margin: 16px">
-            <a class="btn btn-primary" role="button" href="{% url 'info:add_user' %}">+ Create User</a>
-        </div>
+        <nav class="navbar navbar-static-top navbar-custom">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand" style="color:white">Users Info</span>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'info:add_user' %}" style="color: white"> + Create User</a></li>
+                </ul>
+            </div>
+        </nav>
 
         <br/>
         <br/>
@@ -69,7 +87,7 @@
                     {% endif %}
                     <td>{{ user.email }}</td>
                     <td style="text-align:center">
-                        <a class="btn btn-primary btn-xs" role="button" href="#">Edit</a>&nbsp&nbsp&nbsp
+                        <a class="btn btn-primary btn-xs" role="button" href="{% url 'info:edit_user' user.id %}">Edit</a>&nbsp&nbsp&nbsp
                         <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" data-whatever="{{ user.first_name }}" data-userid="{{ user.id }}">Delete</button>&nbsp&nbsp&nbsp
                     </td>
                 </tr>
@@ -93,7 +111,7 @@
                     <p class="user_name">User name</p>
 
                     <div style="text-align:end">
-                        <a class="btn btn-primary btn-sm" role="button" href="#" data-dismiss="modal">Cancel</a>&nbsp&nbsp&nbsp
+                        <a class="btn btn-primary btn-sm" role="button" data-dismiss="modal">Cancel</a>&nbsp&nbsp&nbsp
                         <a id="delete_user" class="btn btn-danger btn-sm" role="button">Delete</a>&nbsp&nbsp&nbsp
                         <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                     </div>
