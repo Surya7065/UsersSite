@@ -10,8 +10,11 @@
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
     </head>
 
     <style>
@@ -67,7 +70,7 @@
                     <td>{{ user.email }}</td>
                     <td style="text-align:center">
                         <a class="btn btn-primary btn-xs" role="button" href="#">Edit</a>&nbsp&nbsp&nbsp
-                        <a class="btn btn-danger btn-xs" role="button" href="#">Delete</a>&nbsp&nbsp&nbsp
+                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" data-whatever="{{ user.first_name }}" data-userid="{{ user.id }}">Delete</button>&nbsp&nbsp&nbsp
                     </td>
                 </tr>
 
@@ -75,6 +78,26 @@
 
 
             </table>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-xs">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p class="user_name">This is a small modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-primary btn-sm" role="button" href="#" data-dismiss="modal">Cancel</a>&nbsp&nbsp&nbsp
+                        <a id="delete_user" class="btn btn-danger btn-sm" role="button" href="#">Delete</a>&nbsp&nbsp&nbsp
+                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {% else %}
             <p style="width:700px, margin:0 auto">No users exist</p>
