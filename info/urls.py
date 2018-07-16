@@ -37,4 +37,7 @@ urlpatterns = [
 
     # /user/logout/
     path('logout', views.logout_user, name='logout'),
+
+    # /user/myaccount/
+    path('myaccount/', views.my_account, name='my_account'),
 ]

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Add User</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-red.min.css">
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    </head>
+
+    <body>
+
+        <div class = "mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class = "mdl-layout__header">
+                <div class = "mdl-layout__header-row">
+                    <span class = "mdl-layout-title">Users Info</span>
+                    <!-- Add spacer, to align navigation to the right -->
+                    <div class="mdl-layout-spacer"></div>
+                    <!-- Navigation. We hide it in small screens. -->
+                    <nav class="mdl-navigation mdl-layout--large-screen-only">
+                        <a class="mdl-navigation__link" href="{% url 'info:index' %}">Home</a>
+                        <a class="mdl-navigation__link">My Account</a>
+                        <a class="mdl-navigation__link" href="{% url 'info:logout' %}">Sign Out</a>
+                        <a class="mdl-navigation__link" href="{% url 'info:add_user' %}">Create User</a>
+                    </nav>
+                </div>
+            </header>
+
+            <main class = "mdl-layout__content">
+
+                <br/>
+                <br/>
+
+                <div style="text-align:center">
+                    <!-- Accent-colored raised button with ripple -->
+                    <button  id="show-dialog" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        Reset Password
+                    </button>
+                </div>
+
+                <dialog class="mdl-dialog" style="width:400px">
+                    <h4 class="mdl-dialog__title">Reset Password</h4>
+                    <div class="mdl-dialog__content">
+                        <!-- Textfield with Floating Label -->
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="password" id="sample1" name="password">
+                            <label class="mdl-textfield__label" for="sample1">Password</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="password" id="sample2" name="pw_a">
+                            <label class="mdl-textfield__label" for="sample2">Confirm Password</label>
+                        </div>
+
+                    </div>
+                    <div class="mdl-dialog__actions">
+                        <button type="button" class="mdl-button">Update</button>
+                        <button type="button" class="mdl-button close">Cancel</button>
+                    </div>
+                </dialog>
+
+            </main>
+        </div>
+
+
+    </body>
+
+        <script>
+            var dialog = document.querySelector('dialog');
+            var showDialogButton = document.querySelector('#show-dialog');
+            if (! dialog.showModal) {
+              dialogPolyfill.registerDialog(dialog);
+            }
+            showDialogButton.addEventListener('click', function() {
+              dialog.showModal();
+            });
+            dialog.querySelector('.close').addEventListener('click', function() {
+              dialog.close();
+            });
+
+        </script>
+
+</html>

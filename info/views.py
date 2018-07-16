@@ -16,7 +16,7 @@ def index(request):
 
     if request.user.is_authenticated:
         user_list = User.objects.all()
-        return render(request, 'info/index.html', {'user_list': user_list})
+        return render(request, 'info/mdg/index.html', {'user_list': user_list})
     else:
         return HttpResponseRedirect(reverse('info:login'))
 
@@ -45,7 +45,7 @@ def add_user(request):
         message = 'Create user'
         form = UserForm()
 
-    return render(request, 'info/add_user.html',
+    return render(request, 'info/mdg/add_user.html',
                   {'form': form, 'message': 'Create User', 'error_message': error_message})
 
 
@@ -84,7 +84,7 @@ def edit_user(request, user_id):
                 'password': user.password}
         form = UserForm(initial=data)
 
-    return render(request, 'info/add_user.html', {'form': form, 'message': message})
+    return render(request, 'info/mdg/add_user.html', {'form': form, 'message': message})
 
 
 def login_user(request):
@@ -99,12 +99,16 @@ def login_user(request):
         else:
             login(request, user)
             return HttpResponseRedirect(reverse('info:index'))
-    return render(request, 'info/login_page.html', {})
+    return render(request, 'info/mdg/login_page.html', {})
 
 
 def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('info:login'))
+
+
+def my_account(request):
     if request.user.is_authenticated:
-        logout(request)
-        return HttpResponseRedirect(reverse('info:login'))
+        return render(request, 'info/mdg/account.html', {})
     else:
-        return HttpResponse("User not authenticated")
+        return HttpResponseRedirect(reverse('info:login'))
