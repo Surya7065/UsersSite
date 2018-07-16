@@ -69,8 +69,8 @@
 
                 {% for user in user_list %}
 
-                <tr>
-                    <td>{{ forloop.counter }}</td>
+                <tr align="left">
+                    <td style="margin: 0 auto">{{ forloop.counter }}</td>
 
                     <!--Check if first name exists-->
                     {% if user.first_name %}
@@ -86,7 +86,7 @@
                     <td>N/A</td>
                     {% endif %}
                     <td>{{ user.email }}</td>
-                    <td style="text-align:center">
+                    <td>
                         <a class="btn btn-primary btn-xs" role="button" href="{% url 'info:edit_user' user.id %}">Edit</a>&nbsp&nbsp&nbsp
                         <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" data-whatever="{{ user.first_name }}" data-userid="{{ user.id }}">Delete</button>&nbsp&nbsp&nbsp
                     </td>

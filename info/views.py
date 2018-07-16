@@ -13,7 +13,7 @@ def index(request):
 
     user_list = User.objects.all()
 
-    return render(request, 'info/index.html', {'user_list': user_list})
+    return render(request, 'info/mdg/index.html', {'user_list': user_list})
 
 
 def add_user(request):
@@ -35,7 +35,7 @@ def add_user(request):
         message = 'Create user'
         form = UserForm()
 
-    return render(request, 'info/add_user.html', {'form': form, 'message': message})
+    return render(request, 'info/mdg/add_user.html', {'form': form, 'message': message})
 
 
 def delete_user(request, user_id):
@@ -72,4 +72,4 @@ def edit_user(request, user_id):
         data = {'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email, 'password': user.password}
         form = UserForm(initial=data)
 
-    return render(request, 'info/add_user.html', {'form': form, 'message': message})
+    return render(request, 'info/mdg/add_user.html', {'form': form, 'message': message})

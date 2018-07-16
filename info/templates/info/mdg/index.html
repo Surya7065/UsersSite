@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Add User</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-red.min.css">
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    </head>
+
+    <body>
+
+        <div class = "mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class = "mdl-layout__header">
+                <div class = "mdl-layout__header-row">
+                    <span class = "mdl-layout-title">Users Info</span>
+                </div>
+            </header>
+
+            <main class = "mdl-layout__content">
+
+                <br/>
+                <br/>
+
+                <div style="text-align:center">
+                    <!-- Colored raised button -->
+                    <a href="{% url 'info:add_user' %}">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" style="margin: 0 auto">
+                        + Create User
+                        </button>
+                    </a>
+                </div>
+
+
+                <br/>
+                <br/>
+
+
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="margin: 0 auto">
+                    <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th class="mdl-data-table__cell--non-numeric">First Name</th>
+                        <th class="mdl-data-table__cell--non-numeric">Last Name</th>
+                        <th class="mdl-data-table__cell--non-numeric">Email</th>
+                        <th class="mdl-data-table__cell--non-numeric">&nbsp&nbsp&nbsp&nbsp&nbspAction</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in user_list %}
+
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+
+                        <!--Check if first name exists-->
+                        {% if user.first_name %}
+                        <td class="mdl-data-table__cell--non-numeric">{{ user.first_name }}</td>
+                        {% else %}
+                        <td class="mdl-data-table__cell--non-numeric">N/A</td>
+                        {% endif %}
+
+                        <!--check if last name exists-->
+                        {% if user.last_name %}
+                        <td class="mdl-data-table__cell--non-numeric">{{ user.last_name }}</td>
+                        {% else %}
+                        <td class="mdl-data-table__cell--non-numeric">N/A</td>
+                        {% endif %}
+                        <td class="mdl-data-table__cell--non-numeric">{{ user.email }}</td>
+                        <td class="mdl-data-table__cell--non-numeric" style="text-align:center">
+                            <!--<a class="btn btn-primary btn-xs" role="button" href="{% url 'info:edit_user' user.id %}">Edit</a>&nbsp&nbsp&nbsp-->
+                            <!--<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal" data-whatever="{{ user.first_name }}" data-userid="{{ user.id }}">Delete</button>&nbsp&nbsp&nbsp-->
+                            <a href="{% url 'info:edit_user' user.id %}"><button class="mdl-button mdl-js-button" style="margin: 0 auto">
+                            Edit
+                            </button></a>
+                            <button onclick="handleDelete()" class="mdl-button mdl-js-button" style="margin: 0 auto">
+                            Delete
+                            </button>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+                <dialog class="mdl-dialog">
+                    <h4 class="mdl-dialog__title">Allow data collection?</h4>
+                    <div class="mdl-dialog__content">
+                        <p>
+                            Allowing us to collect data will let us get you the information you want faster.
+                        </p>
+                    </div>
+                    <div class="mdl-dialog__actions">
+                        <button type="button" class="mdl-button">Agree</button>
+                        <button type="button" class="mdl-button close">Disagree</button>
+                    </div>
+                </dialog>
+
+            </main>
+        </div>
+
+
+    </body>
+
+    <script>
+
+
+            var dialog = document.querySelector('dialog');
+            var showDialogButton = document.querySelector('#delete_user');
+            if (! dialog.showModal) {
+              dialogPolyfill.registerDialog(dialog);
+            }
+            dialog.querySelector('.close').addEventListener('click', function() {
+              dialog.close();
+            });
+        function handleDelete(){
+
+            (this).addEventListener('click', function() {
+              dialog.showModal();
+            });
+        }
+    </script>
+
+</html>
