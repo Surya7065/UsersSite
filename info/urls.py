@@ -31,4 +31,10 @@ urlpatterns = [
 
     # /user/{{id}}/edit/
     path('<int:user_id>/edit', views.edit_user, name='edit_user'),
+
+    # /user/login/
+    path('login', views.login_user, name='login'),
+
+    # /user/logout/
+    path('logout', views.logout_user, name='logout'),
 ]
