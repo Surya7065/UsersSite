@@ -33,12 +33,12 @@
                     <div class="mdl-dialog__content">
                         <!-- Textfield with Floating Label -->
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="sample1" name="username">
-                            <label class="mdl-textfield__label" for="sample1">Username</label>
+                            <input class="mdl-textfield__input" type="email" id="sample1" name="email" required>
+                            <label class="mdl-textfield__label" for="sample1">Email</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="password" id="sample2" name="password">
-                            <label class="mdl-textfield__label" for="sample2">Confirm Password</label>
+                            <input class="mdl-textfield__input" type="password" id="sample2" name="password" required>
+                            <label class="mdl-textfield__label" for="sample2">Password</label>
                         </div>
 
                     </div>
@@ -46,12 +46,19 @@
                     <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
                         <button type="submit" class="mdl-button">Login</button>
                         <button type="button" class="mdl-button close"><a href="add/" style="text-decoration: none">New User?</a></button>
-                        <button type="submit" class="mdl-button"><a href="{% url 'info:forgot_pass' %}">Forgot Password</button>
+                        <button type="submit" class="mdl-button"><a href="{% url 'info:forgot_pass' %}" style="text-decoration: none;color: #2196F3">Forgot Password</a></button>
                     </div>
                 </form>
             </dialog>
 
         </main>
+
+
+
+        <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
 
     </body>
 
@@ -61,12 +68,21 @@
             if (! dialog.showModal) {
               dialogPolyfill.registerDialog(dialog);
             }
-            <!--showDialogButton.addEventListener('click', function() {-->
-              dialog.showModal();
+            dialog.showModal();
 
-            <!--dialog.querySelector('.close').addEventListener('click', function() {-->
-              <!--dialog.close();-->
-            <!--});-->
+            {% if error_message %}
+
+            r(function(){
+                var notification = document.querySelector('.mdl-js-snackbar');
+                notification.MaterialSnackbar.showSnackbar(
+                  {
+                    message: 'Wrong credentials'
+                  }
+                );
+            });
+
+            {% endif %}
+            function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
 
         </script>
 

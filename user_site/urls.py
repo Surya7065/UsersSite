@@ -20,5 +20,4 @@ import django.contrib.auth.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('info.urls')),
-    path('', include('django.contrib.auth.urls'))
 ]

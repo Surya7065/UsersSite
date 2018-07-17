@@ -7,6 +7,8 @@ from django.http import request, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from .forms import UserForm
 from django.conf import settings
+from .models import VerificationToken
+from django.utils.crypto import get_random_string
 
 
 def index(request):
@@ -90,18 +92,23 @@ def edit_user(request, user_id):
 
 
 def login_user(request):
+    error_message = None
     if request.method == 'POST':
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(username=username, password=password)
+        try:
+            x = User.objects.get(email=email)
+            user = authenticate(username=x.username, password=password)
+            if user is None:
+                # User does not exist
+                error_message = "Wrong credentials"
+            else:
+                login(request, user)
+                return HttpResponseRedirect(reverse('info:index'))
+        except User.DoesNotExist:
+            error_message = "Wrong credentials"
 
-        if user is None:
-            # User does not exist
-            return HttpResponse("Wrong credentials")
-        else:
-            login(request, user)
-            return HttpResponseRedirect(reverse('info:index'))
-    return render(request, 'info/mdg/login_page.html', {})
+    return render(request, 'info/mdg/login_page.html', {'error_message': error_message})
 
 
 def logout_user(request):
@@ -127,10 +134,53 @@ def forgot_pass(request):
             error = 'Email id not registered'
         else:
             # send verification link
+            try:
+                vt = VerificationToken.objects.get(user=user)
+                unique_id = vt.token
+            except VerificationToken.DoesNotExist:
+                unique_id = get_random_string(64)
+                vt = VerificationToken.objects.create(token=unique_id, user=user, is_token_valid=True)
+
             subject = 'Password Reset Requested'
-            message = 'Click the below link to reset your password'
+            message = 'Click the below link to reset your password\n' + '127.0.0.1:8000/user/reset_password/' + unique_id
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [email]
             send_mail(subject, message, email_from, recipient_list)
             return HttpResponse('Email Sent')
     return render(request, 'info/mdg/forgot_password.html', {'error': error})
+
+
+def reset_pass(request, token):
+    message = None
+
+    if request.method == 'POST':
+        password = request.POST['password']
+        pw_a = request.POST['pw_a']
+        if password != pw_a:
+            # passwords do not match display error
+            return render(request, 'info/mdg/reset_password.html', {'error_message': 'Passwords do not match'})
+            pass
+        else:
+            vf = VerificationToken.objects.get(token=token)
+            user = vf.user
+            user.set_password(password)
+            user.save()
+            vf.delete()
+            return HttpResponseRedirect(reverse('info:login'))
+
+    else:
+        try:
+            vf = VerificationToken.objects.get(token=token)
+            if vf.is_token_valid:
+                message = 'token valid'
+                # display password reset form
+                return render(request, 'info/mdg/reset_password.html')
+            else:
+                # token not valid
+                message = 'token is expired'
+                pass
+        except VerificationToken.DoesNotExist:
+            # Verification token does not exist
+            message = 'Unauthorised entry'
+
+    return HttpResponse(message)

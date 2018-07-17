@@ -41,8 +41,12 @@ urlpatterns = [
     path('logout', views.logout_user, name='logout'),
 
     # /user/myaccount/
-    path('myaccount/', views.my_account, name='my_account'),
+    # path('myaccount/', views.my_account, name='my_account'),
 
+    # forgot password
     path('forgot_password/', views.forgot_pass, name='forgot_pass'),
+
+    # reset password
+    path('reset_password/<str:token>/', views.reset_pass, name='reset_pass'),
 
 ]
