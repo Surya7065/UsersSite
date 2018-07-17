@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 from django.db import IntegrityError
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import request, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from .forms import UserForm
+from django.conf import settings
 
 
 def index(request):
@@ -112,3 +114,23 @@ def my_account(request):
         return render(request, 'info/mdg/account.html', {})
     else:
         return HttpResponseRedirect(reverse('info:login'))
+
+
+def forgot_pass(request):
+    error = None
+    if request.method == 'POST':
+        # validate email
+        email = request.POST['email']
+        user = User.objects.get(email=email)
+        if user is None:
+            # User does not exists
+            error = 'Email id not registered'
+        else:
+            # send verification link
+            subject = 'Password Reset Requested'
+            message = 'Click the below link to reset your password'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [email]
+            send_mail(subject, message, email_from, recipient_list)
+            return HttpResponse('Email Sent')
+    return render(request, 'info/mdg/forgot_password.html', {'error': error})
